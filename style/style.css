@@ -1,6 +1,7 @@
 body {
     font-family: 'Gluten', cursive;
     background-color: #F1F0E8;
+    user-select: none;
 }
 
 nav {
@@ -22,7 +23,7 @@ h1,h2,h3,.banner {
     box-shadow: black 4px 4px 8px;
 }
 
-.start-button:active {
+.start-button-down {
     box-shadow: black 1px 1px 4px;
     transform: translateY(3px) translateX(3px);
     background-color: #c6cbce;
@@ -33,21 +34,35 @@ h1,h2,h3,.banner {
     position: relative;
     height: 500px;
     width: 500px;
-    background-image: linear-gradient(to top, #96B6C5, #ADC4CE)
+    background-image: linear-gradient(to top, #96B6C5, #ADC4CE);
+    border: solid 4px #96B6C5;
+    overflow-x: hidden;
+    z-index: 0;
 }
 
-.zangief-box {
-    height: 80px;
+.zangief-box-right {
+    height: 90%;
     position: absolute;
-    right: 15px;
-    bottom: 60px;
+    right: -50%;
+    bottom: 0;
+    z-index: 2;
 }
+
+.zangief-box-left {
+    height: 90%;
+    position: absolute;
+    left: -50%;
+    bottom: 0;
+    z-index: 2;
+    transform: scaleX(-1);
+}
+
 
 .zangief-laugh {
-    height: 400px;
+    height: 80%;
     position: absolute;
-    right: 50px;
-    bottom: 75px;
+    right: 10%;
+    bottom: 15%;
     z-index: 1;
 }
 
@@ -55,35 +70,85 @@ h1,h2,h3,.banner {
     height: 200px;
     width: 200px;
     position: relative;
-    border: solid 3px black;
+    border: solid 5px black;
+    z-index: 0;
 }
 
 .button-up {
-    box-shadow: black 4px 4px 8px;
+    box-shadow: black 6px 6px 10px;
 }
 
-.button-down {
-    box-shadow: black 1px 1px 4px;
-    transform: translateY(3px) translateX(3px);
+.light-up-red,.light-up-yellow,.light-up-green,.light-up-blue {
+    transform: translateY(4px) translateX(4px);
 }
 
 .invisible {
     visibility: hidden;
 }
 
-.red {
-    background-color: #EC53B0;
+.shake {
+    animation: shake 0.1s;
+    animation-iteration-count: infinite;
+}
 
+.red {
+    background-color: #993270;
+}
+
+.light-up-red {
+    background-color: #ff008c;
+    box-shadow: #ff008c 0px 0px 20px;
 }
 
 .yellow {
     background-color: #FFFD8C;
 }
 
+.light-up-yellow {
+    background-color: #fbff00;
+    box-shadow: #fbff00 0px 0px 20px;
+}
+
 .green {
     background-color: #A8DF8E;
+}
+
+.light-up-green {
+    background-color: #51ff00;
+    box-shadow: #15ff00 0px 0px 20px;
 }
 
 .blue {
     background-color: #0E21A0;
 }
+
+.light-up-blue {
+    background-color: #00aeff;
+    box-shadow: #00aeff 0px 0px 20px;
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+  }
+
+  @media (max-width:390px) {
+    .game-container {
+        height: 390px;
+        width: 390px;
+    }
+
+    .button-box {
+        height: 156px;
+        width: 156px;
+    }
+  }
