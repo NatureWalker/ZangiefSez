@@ -48,7 +48,7 @@ function youWin() {
   $("h1").text("You win!");
   userClickedPattern = [];
   setTimeout(() => {
-    zangiefLose(2000);    
+    zangiefLose(2000);
   }, 1000);
 
   setTimeout(() => {
@@ -59,8 +59,12 @@ function youWin() {
 function youLose() {
   $("h1").text("You lose!");
   loseSound.play();
+  $("body").toggleClass("lose");
+  $("h1").toggleClass("banner-lose");
   zangiefLaugh(0);
   setTimeout(() => {
+    $("body").toggleClass("lose");
+    $("h1").toggleClass("banner-lose");
     clearSlate();
   }, 4000);
 }

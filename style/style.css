@@ -4,6 +4,10 @@ body {
     user-select: none;
 }
 
+.lose {
+    background-color: #900C3F;
+}
+
 nav {
     background-color: #96B6C5;
 }
@@ -14,6 +18,10 @@ nav {
 
 h1,h2,h3,.banner {
     font-family: 'Permanent Marker', cursive;
+}
+
+.banner-lose {
+    color: #F1F0E8;
 }
 
 .start-button {
