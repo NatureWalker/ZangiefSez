@@ -5,8 +5,56 @@ var buttonColors = ["blue", "red", "green", "yellow"];
 var gamePattern = [];
 var userClickedPattern = [];
 var sequenceInAction = false;
+
+// Sounds
+
 var loseSound = new Audio("./sounds/button-wrong.mp3");
 var readySound = new Audio("./sounds/zangief-ready.mp3");
+var punchSound = new Audio("./sounds/punch-sound.mp3");
+var gruntSound = new Audio("./sounds/zangief-grunt.mp3");
+var painSound = new Audio("./sounds/zangief-pain.mp3");
+var blueSound = new Audio("./sounds/button-blue.mp3");
+var redSound = new Audio("./sounds/button-red.mp3");
+var greenSound = new Audio("./sounds/button-green.mp3");
+var yellowSound = new Audio("./sounds/button-yellow.mp3");
+var laughSound = new Audio("./sounds/zangief-laugh.mp3");
+
+function playSound(sound) {
+  switch (sound) {
+    case "lose":
+      loseSound.play();
+      break;
+    case "ready":
+      readySound.play();
+      break;
+    case "grunt":
+      gruntSound.play();
+      break;
+    case "punch":
+      punchSound.play();
+      break;
+    case "pain":
+      painSound.play();
+      break;
+    case "blue":
+      blueSound.cloneNode().play();
+      break;
+    case "red":
+      redSound.cloneNode().play();
+      break;
+    case "green":
+      greenSound.cloneNode().play();
+      break;
+    case "yellow":
+      yellowSound.cloneNode().play();
+      break;
+    case "laugh":
+      laughSound.play();
+    default:
+      console.log("Sound not found: " + sound);
+      break;
+  }
+}
 
 // Game Functions
 
@@ -58,7 +106,7 @@ function youWin() {
 
 function youLose() {
   $("h1").text("You lose!");
-  loseSound.play();
+  playSound("lose");
   $("body").toggleClass("lose");
   $("h1").toggleClass("banner-lose");
   zangiefLaugh(0);
@@ -72,11 +120,9 @@ function youLose() {
 // Zengif Functions
 
 function punch() {
-  const punchSound = new Audio("./sounds/punch-sound.mp3");
-  const gruntSound = new Audio("./sounds/zangief-grunt.mp3");
-  gruntSound.play();
+  playSound("grunt");
   setTimeout(() => {
-    punchSound.play();
+    playSound("punch");
   }, 100);
 }
 
@@ -110,19 +156,19 @@ function determineTO(attackNum) {
 }
 
 function zangiefLose(timeout) {
-  const grunt = new Audio("./sounds/zangief-pain.mp3");
- 
   // disable user actions
- 
+
   sequenceInAction = true;
   $(".start-button").prop("disabled", true);
 
   // Show Zangief
 
   $(".game-container > img").hide();
-  $(".game-container > img").attr("src", "./images/zangief.lose.gif").toggleClass("invisible");
+  $(".game-container > img")
+    .attr("src", "./images/zangief.lose.gif")
+    .toggleClass("invisible");
   $(".game-container > img").fadeIn();
-  grunt.play();
+  playSound("pain");
 
   setTimeout(() => {
     $(".game-container > img").attr("src", "").toggleClass("invisible");
@@ -132,8 +178,6 @@ function zangiefLose(timeout) {
 }
 
 function zangiefLaugh(timeout) {
-  const laugh = new Audio("./sounds/zangief-laugh.mp3");
-
   sequenceInAction = true;
   $(".start-button").prop("disabled", true);
 
@@ -141,7 +185,7 @@ function zangiefLaugh(timeout) {
     $(".game-container > img")
       .attr("src", "./images/zangief.celebrate.gif")
       .toggleClass("invisible");
-    laugh.play();
+    playSound("laugh");
   }, timeout);
 
   setTimeout(() => {
@@ -184,7 +228,7 @@ function attack(box, attack) {
         .toggleClass("button-up")
         .toggleClass("light-up-" + colorID)
         .toggleClass("shake");
-      buttonSound(colorID);
+      playSound(colorID);
     }, firstTimeOut + 200);
 
     // Zangief disappears and buttons return to normal
@@ -223,29 +267,6 @@ function determineOrder(numOfAttacks, num) {
 }
 
 // Button Functions
-
-function buttonSound(ID) {
-  let audioPath = "";
-  switch (ID) {
-    case "blue":
-      audioPath = "./sounds/button-blue.mp3";
-      break;
-    case "red":
-      audioPath = "./sounds/button-red.mp3";
-      break;
-    case "green":
-      audioPath = "./sounds/button-green.mp3";
-      break;
-    case "yellow":
-      audioPath = "./sounds/button-yellow.mp3";
-      break;
-    default:
-      console.log(ID);
-      break;
-  }
-  let buttonSound = new Audio(audioPath);
-  buttonSound.cloneNode().play();
-}
 
 function buttonPress(button) {
   let btnClass = "";
@@ -295,9 +316,8 @@ $(".start-button").click(function () {
     if (level === 0) {
       readySound.play();
       setTimeout(() => {
-        beginAttack();        
+        beginAttack();
       }, 1000);
-
     } else {
       clearSlate();
     }
@@ -307,9 +327,9 @@ $(".start-button").click(function () {
 // Enable click listener on Simon Says buttons if no sequence in action
 
 $(".button-box").click(function () {
-  if (!sequenceInAction || level === 0) {
+  if (!sequenceInAction && level > 0) {
     buttonPress($(this));
-    buttonSound($(this).attr("id"));
+    playSound($(this).attr("id"));
     if (checkAnswer($(this))) {
       if (userClickedPattern.length === gamePattern.length) {
         youWin();
