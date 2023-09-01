@@ -5,6 +5,7 @@ var buttonColors = ["blue", "red", "green", "yellow"];
 var gamePattern = [];
 var userClickedPattern = [];
 var sequenceInAction = false;
+var audioArrayTriggered = false;
 
 // Sounds
 
@@ -18,6 +19,21 @@ var redSound = new Audio("./sounds/button-red.mp3");
 var greenSound = new Audio("./sounds/button-green.mp3");
 var yellowSound = new Audio("./sounds/button-yellow.mp3");
 var laughSound = new Audio("./sounds/zangief-laugh.mp3");
+
+var audioArray = [loseSound,readySound,punchSound,gruntSound,painSound,blueSound,redSound,greenSound,yellowSound,laughSound];
+
+function triggerAudioArray() {
+
+  for (i=0;i<audioArray.length;i++) {
+    audioArray[i].play();
+    audioArray[i].pause();
+    audioArray[i].currentTime = 0;
+  }
+
+  audioArray = null;
+  audioArrayTriggered = true;
+
+}
 
 function playSound(sound) {
   switch (sound) {
@@ -311,6 +327,9 @@ function clearSlate() {
 // Enable click listener on GO! button if no sequence in action
 
 $(".start-button").click(function () {
+  if (!audioArrayTriggered) {
+    triggerAudioArray();
+  }
   if (!sequenceInAction) {
     buttonPress($(this));
     if (level === 0) {
