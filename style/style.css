@@ -1,0 +1,89 @@
+body {
+    font-family: 'Gluten', cursive;
+    background-color: #F1F0E8;
+}
+
+nav {
+    background-color: #96B6C5;
+}
+
+.navbar-brand {
+    line-height: 15px;
+}
+
+h1,h2,h3,.banner {
+    font-family: 'Permanent Marker', cursive;
+}
+
+.start-button {
+    background-color: #ADC4CE;
+    font-size: 2rem;
+    color: #F1F0E8;
+    box-shadow: black 4px 4px 8px;
+}
+
+.start-button:active {
+    box-shadow: black 1px 1px 4px;
+    transform: translateY(3px) translateX(3px);
+    background-color: #c6cbce;
+    color: black;   
+}
+
+.game-container {
+    position: relative;
+    height: 500px;
+    width: 500px;
+    background-image: linear-gradient(to top, #96B6C5, #ADC4CE)
+}
+
+.zangief-box {
+    height: 80px;
+    position: absolute;
+    right: 15px;
+    bottom: 60px;
+}
+
+.zangief-laugh {
+    height: 400px;
+    position: absolute;
+    right: 50px;
+    bottom: 75px;
+    z-index: 1;
+}
+
+.button-box {
+    height: 200px;
+    width: 200px;
+    position: relative;
+    border: solid 3px black;
+}
+
+.button-up {
+    box-shadow: black 4px 4px 8px;
+}
+
+.button-down {
+    box-shadow: black 1px 1px 4px;
+    transform: translateY(3px) translateX(3px);
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.red {
+    background-color: #EC53B0;
+
+}
+
+.yellow {
+    background-color: #FFFD8C;
+}
+
+.green {
+    background-color: #A8DF8E;
+}
+
+.blue {
+    background-color: #0E21A0;
+}
