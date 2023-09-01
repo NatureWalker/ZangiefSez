@@ -6,6 +6,7 @@ var gamePattern = [];
 var userClickedPattern = [];
 var sequenceInAction = false;
 var loseSound = new Audio("./sounds/button-wrong.mp3");
+var readySound = new Audio("./sounds/zangief-ready.mp3");
 
 // Game Functions
 
@@ -105,7 +106,7 @@ function determineTO(attackNum) {
 }
 
 function zangiefLose(timeout) {
-  const grunt = new Audio("./sounds/zangief-grunt.mp3");
+  const grunt = new Audio("./sounds/zangief-pain.mp3");
  
   // disable user actions
  
@@ -288,7 +289,11 @@ $(".start-button").click(function () {
   if (!sequenceInAction) {
     buttonPress($(this));
     if (level === 0) {
-      beginAttack();
+      readySound.play();
+      setTimeout(() => {
+        beginAttack();        
+      }, 1000);
+
     } else {
       clearSlate();
     }
