@@ -20,6 +20,16 @@ h1,h2,h3,.banner {
     font-family: 'Permanent Marker', cursive;
 }
 
+h2 {
+    color: #900C3F;
+    text-shadow: #F1F0E8 2px 2px 1px;
+}
+
+.dark-buttons {
+    color: #F1F0E8;
+    text-shadow: #900C3F 2px 2px 1px;
+}
+
 .banner-lose {
     color: #F1F0E8;
 }
@@ -36,6 +46,38 @@ h1,h2,h3,.banner {
     transform: translateY(3px) translateX(3px);
     background-color: #c6cbce;
     color: black;   
+}
+
+.arena {
+    position: relative;
+    width: 500px;
+    height: 100px;
+    border: inset 1px #900C3F;
+    overflow-x: hidden;
+    background-image: url("../images/backgrounds/background-1.png");
+    background-position: center top;
+    background-size: 100% auto;
+}
+
+.arena > img {
+    height: 75%;
+}
+
+.arena-flip {
+    transform: scaleX(-1);
+}
+
+#ryu-fighter {
+    position: absolute;
+    bottom: 2px;
+    left: 37.8%;
+    z-index: 1;
+}
+
+#zangief-fighter{
+    position: absolute;
+    bottom: 0;
+    right: 36.6%;
 }
 
 .game-container {
@@ -152,6 +194,11 @@ h1,h2,h3,.banner {
   @media (max-width:390px) {
     .game-container {
         height: 390px;
+        width: 390px;
+    }
+
+    .arena {
+        height: 78px;
         width: 390px;
     }
 
