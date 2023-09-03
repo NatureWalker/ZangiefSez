@@ -291,9 +291,6 @@ function animation(character, type) {
           ryuLKick[animVar].timeout,
           ryuLKick[animVar].flip,
         ];
-        if (animVar > 0) {
-          animSpecs.push("decreaseSize");
-        }
         break;
       case "highPunch":
         animVar = Math.floor(Math.random() * ryuHPunch.length);
@@ -337,7 +334,7 @@ function animation(character, type) {
         ];
         break;
       default:
-        console.log("Type is " + type);
+        console.log("Ryu animation type not found: " + type);
         break;
     }
   } else if (character === "zangief") {
@@ -383,11 +380,11 @@ function animation(character, type) {
         ];
         break;
       default:
-        console.log("Zangief is character and type is " + type);
+        console.log("Zangief animation type not found: " + type);
         break;
     }
   } else {
-    console.log("Character is" + character);
+    console.log("Character not found: " + character);
   }
   return animSpecs;
 }
@@ -463,7 +460,7 @@ function playSound(sound) {
     case "ryuPain":
       ryuPainAudio.play();
       break;
-     case "ryuLose":
+    case "ryuLose":
       ryuLoseAudio.play();
       break;
     default:
@@ -535,12 +532,32 @@ function youLose() {
   $("body").toggleClass("lose");
   $("h1").toggleClass("banner-lose");
   ryuLoseAnimation(4000);
-  // zangiefLaugh(0);
   setTimeout(() => {
     $("body").toggleClass("lose");
     $("h1").toggleClass("banner-lose");
     clearSlate();
   }, 4000);
+}
+
+function buttonPress(button) {
+  let btnClass = "";
+  let lightUp = false;
+  if (button.attr("id") === "start") {
+    btnClass = "start-button-down";
+    lightUp = false;
+  } else {
+    lightUp = true;
+  }
+  $(button).toggleClass(btnClass);
+  if (lightUp) {
+    $(button).toggleClass("light-up-" + button.attr("id"));
+  }
+  setTimeout(() => {
+    $(button).toggleClass(btnClass);
+    if (lightUp) {
+      $(button).toggleClass("light-up-" + button.attr("id"));
+    }
+  }, 200);
 }
 
 // Ryu Functions
@@ -549,7 +566,6 @@ function youLose() {
 
 function performAttackAnimation(attackType) {
   sequenceInAction = true;
-  console.log("Sequence in action, line 552");
   let attackValues = "";
   let zangiefTakesDamage = animation("zangief", "pain");
   switch (attackType) {
@@ -566,10 +582,13 @@ function performAttackAnimation(attackType) {
       attackValues = animation("ryu", "lowPunch");
       break;
     default:
-      console.log("Attack type was " + attackType);
+      console.log("Attack type note found: " + attackType);
       break;
   }
 
+  if (attackValues[3]) {
+    $("#ryu-fighter").toggleClass("increase-left");
+  }
   $("#ryu-fighter").attr("src", attackValues[0]);
   playSound("ryuPunch");
 
@@ -580,16 +599,74 @@ function performAttackAnimation(attackType) {
 
   setTimeout(() => {
     $("#ryu-fighter").attr("src", animation("ryu", "idle")[0]);
+    if (attackValues[3]) {
+      $("#ryu-fighter").toggleClass("increase-left");
+    }
   }, attackValues[1]);
 
   setTimeout(() => {
     $("#zangief-fighter").attr("src", animation("zangief", "idle")[0]);
     sequenceInAction = false;
-    console.log("Sequence ended, line 588");
   }, attackValues[1] / 2 + zangiefTakesDamage[1]);
 }
 
+// Ryu Losing Animation
+
+function ryuLoseAnimation(timeout) {
+  // disable user actions
+
+  sequenceInAction = true;
+  $(".start-button").prop("disabled", true);
+
+  // Show Ryu Losing Animation
+
+  let zangiefAttackAnimation = animation("zangief", "attack");
+  let ryuLoseAnimation = animation("ryu", "lose");
+
+  $("#zangief-fighter")
+    .attr("src", zangiefAttackAnimation[0])
+    .toggleClass("set-front");
+
+  if (!zangiefAttackAnimation[2]) {
+    $("#zangief-fighter").toggleClass("arena-flip");
+  }
+
+  playSound("zangPunch");
+
+  setTimeout(() => {
+    $("#ryu-fighter").attr("src", ryuLoseAnimation[0]).toggleClass("lose-anim");
+    playSound("impact");
+    playSound("ryuLose");
+  }, zangiefAttackAnimation[1] / 2);
+
+  setTimeout(() => {
+    if (!zangiefAttackAnimation[2]) {
+      $("#zangief-fighter").toggleClass("arena-flip");
+    }
+    $("#zangief-fighter")
+      .attr("src", animation("zangief", "win")[0])
+      .css("height", "95%");
+    playSound("zangLaugh");
+  }, zangiefAttackAnimation[1]);
+
+  // Return to Idle Animation and restore user functions
+
+  setTimeout(() => {
+    $("#zangief-fighter")
+      .attr("src", animation("zangief", "idle")[0])
+      .toggleClass("set-front")
+      .removeAttr("style");
+    $("#ryu-fighter")
+      .attr("src", animation("ryu", "idle")[0])
+      .toggleClass("lose-anim");
+    sequenceInAction = false;
+    $(".start-button").prop("disabled", false);
+  }, timeout);
+}
+
 // Zengif Functions
+
+// Zengif Punch Sounds
 
 function punch() {
   playSound("zangPunch");
@@ -598,46 +675,20 @@ function punch() {
   }, 100);
 }
 
-// Determines the timeout per Zengief's turn based on GIF animation time
-// function determineTO(attackNum) {
-//   let time = "";
-//   switch (attackNum) {
-//     case 1:
-//       time = 300;
-//       break;
-//     case 2:
-//       time = 400;
-//       break;
-//     case 3:
-//       time = 450;
-//       break;
-//     case 4:
-//       time = 450;
-//       break;
-//     case 5:
-//       time = 650;
-//       break;
-//     case 6:
-//       time = 800;
-//       break;
-//     default:
-//       time = 500;
-//       break;
-//   }
-//   return time;
-// }
+// Zangief Losing Animation
 
 function zangiefLoseAnimation(timeout) {
   // disable user actions
 
   sequenceInAction = true;
-  console.log("Sequence in action, line 633");
   $(".start-button").prop("disabled", true);
 
   // Show Zangief and Ryu End Stance
 
   $("#zangief-fighter").attr("src", animation("zangief", "lose")[0]);
-  $("#ryu-fighter").attr("src", animation("ryu", "win")[0]);
+  $("#ryu-fighter")
+    .attr("src", animation("ryu", "win")[0])
+    .css("height", "95%");
 
   // Play Zangief Lose Sound
 
@@ -650,90 +701,22 @@ function zangiefLoseAnimation(timeout) {
 
   setTimeout(() => {
     $("#zangief-fighter").attr("src", animation("zangief", "idle")[0]);
-    $("#ryu-fighter").attr("src", animation("ryu", "idle")[0]);
+    $("#ryu-fighter")
+      .attr("src", animation("ryu", "idle")[0])
+      .removeAttr("style");
     sequenceInAction = false;
-    console.log("Sequence ended, line 655");
     $(".start-button").prop("disabled", false);
   }, timeout);
 }
-
-function ryuLoseAnimation(timeout) {
-  // disable user actions
-
-  sequenceInAction = true;
-  console.log("Sequence in action, line 662");
-  
-  $(".start-button").prop("disabled", true);
-
-  // Show Zangief and Ryu End Stance
-
-  let zangiefAttackAnimation = animation("zangief", "attack");
-  let ryuLoseAnimation = animation("ryu", "lose");
-  $("#zangief-fighter").attr("src", zangiefAttackAnimation[0]);
-    if (!zangiefAttackAnimation[2]) {
-    $("#zangief-fighter").toggleClass("arena-flip");
-    console.log("Flip toggle is set to " + zangiefAttackAnimation[2]);
-    } else {
-      console.log("Didn't flip. Toggle is " + zangiefAttackAnimation[2]);
-    }
-  playSound("zangPunch");
-
-  setTimeout(() => {
-    $("#ryu-fighter").attr("src", ryuLoseAnimation[0]);
-    playSound("impact");
-    playSound("ryuLose");
-  }, zangiefAttackAnimation[1] / 2);
-
-  setTimeout(() => {
-    $("#zangief-fighter").attr("src", animation("zangief", "win")[0]);
-    playSound("zangLaugh");
-  }, zangiefAttackAnimation[1]);
-
-  // Play Zangief Lose Sound
-
-  // Return to Idle Animation and restore user functions
-
-  setTimeout(() => {
-    if (!zangiefAttackAnimation[2]) {
-      $("#zangief-fighter").toggleClass("arena-flip");
-      console.log("Flip toggle is set to " + zangiefAttackAnimation[2]);
-      } else {
-        console.log("Didn't flip. Toggle is " + zangiefAttackAnimation[2]);
-      }
-    $("#zangief-fighter").attr("src", animation("zangief", "idle")[0]);
-    $("#ryu-fighter").attr("src", animation("ryu", "idle")[0]);
-    sequenceInAction = false;
-    console.log("Sequence ended, line 706");
-    $(".start-button").prop("disabled", false);
-  }, timeout);
-}
-
-// function zangiefLaugh(timeout) {
-//   sequenceInAction = true;
-//   $(".start-button").prop("disabled", true);
-
-//   setTimeout(() => {
-//     $(".game-container > img")
-//       .attr("src", animation("zangief", "win")[0])
-//       .toggleClass("invisible");
-//     playSound("zangLaugh");
-//   }, timeout);
-
-//   setTimeout(() => {
-//     $(".game-container > img").attr("src", "").toggleClass("invisible");
-//     sequenceInAction = false;
-//     $(".start-button").prop("disabled", false);
-//   }, timeout + 3000);
-// }
 
 function attack(box) {
   let firstTimeOut = 0;
   let secondTimeOut = 0;
   let gapTime = 500;
   sequenceInAction = true;
-  console.log("Sequence in action, line 731");
   $(".start-button").prop("disabled", true);
-  $("#zangief-fighter").fadeToggle();
+  // $("#zangief-fighter").fadeToggle();
+  $("#zangief-fighter").toggleClass("offscreen-dash");
 
   for (i = 0; i < box.length; i++) {
     let boxID = "#" + box[i];
@@ -779,67 +762,26 @@ function attack(box) {
     firstTimeOut = secondTimeOut;
   }
 
-  // Zangief laugh reaction queued for end of every 5th sequence
   // Buttons are enabled/disabled during sequences
 
-  // Disabled zangiefLaugh
-
-  // if (level % 5 === 0) {
-  //   zangiefLaugh(firstTimeOut + gapTime);
-  // } else {
   setTimeout(() => {
     sequenceInAction = false;
-    console.log("Sequence ended, line 792");
     $(".start-button").prop("disabled", false);
-    $("#zangief-fighter").fadeToggle();
+    // $("#zangief-fighter").fadeToggle();
+    $("#zangief-fighter").toggleClass("offscreen-dash").toggleClass("onscreen-dash");
   }, firstTimeOut + gapTime);
-  // }
-}
 
-// Disabled determineOrder to replace with random attack images
+  // Silently remove onscreen-dash class
 
-// function determineOrder(numOfAttacks, num) {
-//   const order = [];
-//   for (i = 0; i < numOfAttacks; i++) {
-//     order.push(Math.floor(Math.random() * num + 1));
-//   }
-//   return order;
-// }
-
-// Button Functions
-
-function buttonPress(button) {
-  let btnClass = "";
-  let lightUp = false;
-  // sequenceInAction = true;
-  // console.log("Sequence in action, line 810");
-  if (button.attr("id") === "start") {
-    btnClass = "start-button-down";
-    lightUp = false;
-  } else {
-    lightUp = true;
-  }
-  $(button).toggleClass(btnClass);
-  if (lightUp) {
-    $(button).toggleClass("light-up-" + button.attr("id"));
-  }
   setTimeout(() => {
-    $(button).toggleClass(btnClass);
-    // sequenceInAction = false;
-    // console.log("Sequence ended, line 829");
-    if (lightUp) {
-      $(button).toggleClass("light-up-" + button.attr("id"));
-    }
-  }, 200);
+    $("#zangief-fighter").toggleClass("onscreen-dash");
+  }, firstTimeOut + gapTime + 500);
 }
 
 // Button and Zangief Functions
 
 function beginAttack() {
   let boxOrder = sequenceOrder(4);
-  // Changing attack function to remove attackOrder
-  // let attackOrder = determineOrder(level, 6);
-  // attack(boxOrder, attackOrder);
   attack(boxOrder);
 }
 

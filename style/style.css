@@ -1,209 +1,299 @@
 body {
-    font-family: 'Gluten', cursive;
-    background-color: #F1F0E8;
-    user-select: none;
+  font-family: "Gluten", cursive;
+  background-color: #f1f0e8;
+  user-select: none;
 }
 
 .lose {
-    background-color: #900C3F;
+  background-color: #900c3f;
 }
 
 nav {
-    background-color: #96B6C5;
+  background-color: #96b6c5;
 }
 
 .navbar-brand {
-    line-height: 15px;
+  line-height: 15px;
 }
 
-h1,h2,h3,.banner {
-    font-family: 'Permanent Marker', cursive;
+h1,
+h2,
+h3,
+.banner {
+  font-family: "Permanent Marker", cursive;
 }
 
 h2 {
-    color: #900C3F;
-    text-shadow: #F1F0E8 2px 2px 1px;
+  color: #900c3f;
+  text-shadow: #f1f0e8 2px 2px 1px;
 }
 
 .dark-buttons {
-    color: #F1F0E8;
-    text-shadow: #900C3F 2px 2px 1px;
+  color: #f1f0e8;
+  text-shadow: #900c3f 2px 2px 1px;
 }
 
 .banner-lose {
-    color: #F1F0E8;
+  color: #f1f0e8;
 }
 
 .start-button {
-    background-color: #ADC4CE;
-    font-size: 2rem;
-    color: #F1F0E8;
-    box-shadow: black 4px 4px 8px;
+  background-color: #adc4ce;
+  font-size: 2rem;
+  color: #f1f0e8;
+  box-shadow: black 4px 4px 8px;
 }
 
 .start-button-down {
-    box-shadow: black 1px 1px 4px;
-    transform: translateY(3px) translateX(3px);
-    background-color: #c6cbce;
-    color: black;   
+  box-shadow: black 1px 1px 4px;
+  transform: translateY(3px) translateX(3px);
+  background-color: #c6cbce;
+  color: black;
 }
 
 .arena {
-    position: relative;
-    width: 500px;
-    height: 100px;
-    border: inset 1px #900C3F;
-    overflow-x: hidden;
-    background-image: url("../images/backgrounds/background-1.png");
-    background-position: center top;
-    background-size: 100% auto;
+  position: relative;
+  width: 500px;
+  height: 100px;
+  border: inset 1px #900c3f;
+  overflow-x: hidden;
+  background-image: url("../images/backgrounds/background-1.png");
+  background-position: center top;
+  background-size: 100% auto;
 }
 
 .arena > img {
-    height: 75%;
+  height: 75%;
 }
 
 .arena-flip {
-    transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
 #ryu-fighter {
-    position: absolute;
-    bottom: 2px;
-    left: 37.8%;
-    z-index: 1;
+  position: absolute;
+  bottom: 2px;
+  left: 37.8%;
+  z-index: 1;
 }
 
-#zangief-fighter{
-    position: absolute;
-    bottom: 0;
-    right: 36.6%;
+.increase-left {
+  animation: move-right 0.5s;
+  animation-iteration-count: 1;
+}
+
+.lose-anim {
+  animation: death-animation 1s forwards;
+}
+
+.set-front {
+  z-index: 3;
+}
+
+#zangief-fighter {
+  position: absolute;
+  bottom: 0;
+  right: 36.6%;
+}
+
+.offscreen-dash {
+  animation: dashOff 0.3s forwards;
+}
+
+.onscreen-dash {
+  animation: dashOn 0.3s forwards;
 }
 
 .game-container {
-    position: relative;
-    height: 500px;
-    width: 500px;
-    background-image: linear-gradient(to top, #96B6C5, #ADC4CE);
-    border: solid 4px #96B6C5;
-    overflow-x: hidden;
-    z-index: 0;
+  position: relative;
+  height: 500px;
+  width: 500px;
+  background-image: linear-gradient(to top, #96b6c5, #adc4ce);
+  border: solid 4px #96b6c5;
+  overflow-x: hidden;
+  z-index: 0;
 }
 
 .zangief-box-right {
-    height: 90%;
-    position: absolute;
-    right: -50%;
-    bottom: 0;
-    z-index: 2;
+  height: 60%;
+  position: absolute;
+  right: -30%;
+  bottom: 20%;
+  z-index: 2;
 }
 
 .zangief-box-left {
-    height: 90%;
-    position: absolute;
-    left: -50%;
-    bottom: 0;
-    z-index: 2;
-    transform: scaleX(-1);
+  height: 60%;
+  position: absolute;
+  left: -30%;
+  bottom: 20%;
+  z-index: 2;
+  transform: scaleX(-1);
 }
 
-
-.zangief-laugh {
-    height: 80%;
-    position: absolute;
-    right: 10%;
-    bottom: 15%;
-    z-index: 1;
-}
+/* .zangief-laugh {
+  height: 80%;
+  position: absolute;
+  right: 10%;
+  bottom: 15%;
+  z-index: 1;
+} */
 
 .button-box {
-    height: 200px;
-    width: 200px;
-    position: relative;
-    border: solid 5px black;
-    z-index: 0;
+  height: 200px;
+  width: 200px;
+  position: relative;
+  border: solid 5px black;
+  z-index: 0;
 }
 
 .button-up {
-    box-shadow: black 6px 6px 10px;
+  box-shadow: black 6px 6px 10px;
 }
 
-.light-up-red,.light-up-yellow,.light-up-green,.light-up-blue {
-    transform: translateY(4px) translateX(4px);
+.light-up-red,
+.light-up-yellow,
+.light-up-green,
+.light-up-blue {
+  transform: translateY(4px) translateX(4px);
 }
 
 .invisible {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 .shake {
-    animation: shake 0.1s;
-    animation-iteration-count: infinite;
+  animation: shake 0.1s;
+  animation-iteration-count: infinite;
 }
 
 .red {
-    background-color: #993270;
+  background-color: #993270;
 }
 
 .light-up-red {
-    background-color: #ff008c;
-    box-shadow: #ff008c 0px 0px 20px;
+  background-color: #ff008c;
+  box-shadow: #ff008c 0px 0px 20px;
 }
 
 .yellow {
-    background-color: #FFFD8C;
+  background-color: #fffd8c;
 }
 
 .light-up-yellow {
-    background-color: #fbff00;
-    box-shadow: #fbff00 0px 0px 20px;
+  background-color: #fbff00;
+  box-shadow: #fbff00 0px 0px 20px;
 }
 
 .green {
-    background-color: #A8DF8E;
+  background-color: #a8df8e;
 }
 
 .light-up-green {
-    background-color: #51ff00;
-    box-shadow: #15ff00 0px 0px 20px;
+  background-color: #51ff00;
+  box-shadow: #15ff00 0px 0px 20px;
 }
 
 .blue {
-    background-color: #0E21A0;
+  background-color: #0e21a0;
 }
 
 .light-up-blue {
-    background-color: #00aeff;
-    box-shadow: #00aeff 0px 0px 20px;
+  background-color: #00aeff;
+  box-shadow: #00aeff 0px 0px 20px;
+}
+
+@keyframes move-right {
+  0% {
+    transform: translateX(0);
+  }
+  30% {
+    transform: translateX(20px);
+  }
+  80% {
+    transform: translateX(20px);
+  }
+  100% {
+    transform: translateX(-20px);
+  }
+}
+
+@keyframes death-animation {
+  5% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100px);
+  }
+}
+
+@keyframes dashOn {
+  0% {
+    transform: translateX(500px);
+  }
+  100% {
+    transform: translateX(-1);
+  }
+}
+
+@keyframes dashOff {
+  0% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(500px);
+  }
 }
 
 @keyframes shake {
-    0% { transform: translate(1px, 1px) rotate(0deg); }
-    10% { transform: translate(-1px, -2px) rotate(-1deg); }
-    20% { transform: translate(-3px, 0px) rotate(1deg); }
-    30% { transform: translate(3px, 2px) rotate(0deg); }
-    40% { transform: translate(1px, -1px) rotate(1deg); }
-    50% { transform: translate(-1px, 2px) rotate(-1deg); }
-    60% { transform: translate(-3px, 1px) rotate(0deg); }
-    70% { transform: translate(3px, 1px) rotate(-1deg); }
-    80% { transform: translate(-1px, -1px) rotate(1deg); }
-    90% { transform: translate(1px, 2px) rotate(0deg); }
-    100% { transform: translate(1px, -2px) rotate(-1deg); }
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
+  }
+  10% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+  20% {
+    transform: translate(-3px, 0px) rotate(1deg);
+  }
+  30% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+  40% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+  50% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+  60% {
+    transform: translate(-3px, 1px) rotate(0deg);
+  }
+  70% {
+    transform: translate(3px, 1px) rotate(-1deg);
+  }
+  80% {
+    transform: translate(-1px, -1px) rotate(1deg);
+  }
+  90% {
+    transform: translate(1px, 2px) rotate(0deg);
+  }
+  100% {
+    transform: translate(1px, -2px) rotate(-1deg);
+  }
+}
+
+@media (max-width: 390px) {
+  .game-container {
+    height: 390px;
+    width: 390px;
   }
 
-  @media (max-width:390px) {
-    .game-container {
-        height: 390px;
-        width: 390px;
-    }
-
-    .arena {
-        height: 78px;
-        width: 390px;
-    }
-
-    .button-box {
-        height: 156px;
-        width: 156px;
-    }
+  .arena {
+    height: 78px;
+    width: 390px;
   }
+
+  .button-box {
+    height: 156px;
+    width: 156px;
+  }
+}
