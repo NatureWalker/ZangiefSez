@@ -713,10 +713,6 @@ function attack(box) {
   let firstTimeOut = 0;
   let secondTimeOut = 0;
   let gapTime = 500;
-  sequenceInAction = true;
-  $(".start-button").prop("disabled", true);
-  // $("#zangief-fighter").fadeToggle();
-  $("#zangief-fighter").toggleClass("offscreen-dash");
 
   for (i = 0; i < box.length; i++) {
     let boxID = "#" + box[i];
@@ -765,8 +761,7 @@ function attack(box) {
   // Buttons are enabled/disabled during sequences
 
   setTimeout(() => {
-    sequenceInAction = false;
-    $(".start-button").prop("disabled", false);
+      $(".start-button").prop("disabled", false);
     // $("#zangief-fighter").fadeToggle();
     $("#zangief-fighter").toggleClass("offscreen-dash").toggleClass("onscreen-dash");
   }, firstTimeOut + gapTime);
@@ -775,6 +770,7 @@ function attack(box) {
 
   setTimeout(() => {
     $("#zangief-fighter").toggleClass("onscreen-dash");
+    sequenceInAction = false;
   }, firstTimeOut + gapTime + 500);
 }
 
@@ -782,7 +778,13 @@ function attack(box) {
 
 function beginAttack() {
   let boxOrder = sequenceOrder(4);
-  attack(boxOrder);
+  sequenceInAction = true;
+  $(".start-button").prop("disabled", true);
+  $("#zangief-fighter").toggleClass("offscreen-dash");
+  setTimeout(() => {
+    attack(boxOrder);  
+  }, 350);
+
 }
 
 // Start Over

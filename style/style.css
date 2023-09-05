@@ -229,7 +229,7 @@ h2 {
 
 @keyframes dashOn {
   0% {
-    transform: translateX(500px);
+    transform: translateX(400%);
   }
   100% {
     transform: translateX(-1);
@@ -238,10 +238,10 @@ h2 {
 
 @keyframes dashOff {
   0% {
-    transform: translateX(0px);
+    transform: translateX(0);
   }
   100% {
-    transform: translateX(500px);
+    transform: translateX(400%);
   }
 }
 
